@@ -1,0 +1,116 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "seite3v06",
+  "position": {
+    "x": 640,
+    "y": 204,
+    "z": 0,
+    "height": 496,
+    "width": 616,
+    "tabOrder": 6
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Pruefung"
+                    }
+                  },
+                  "Property": "Problem"
+                }
+              },
+              "queryRef": "Pruefung.Problem",
+              "nativeQueryRef": "Problem"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Standorte"
+                    }
+                  },
+                  "Property": "Standort"
+                }
+              },
+              "queryRef": "Standorte.Standort",
+              "nativeQueryRef": "Standort"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Pruefung"
+                    }
+                  },
+                  "Property": "Datum"
+                }
+              },
+              "queryRef": "Pruefung.Datum",
+              "nativeQueryRef": "Datum"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Pruefung"
+                    }
+                  },
+                  "Property": "Tour"
+                }
+              },
+              "queryRef": "Pruefung.Tour",
+              "nativeQueryRef": "Tour"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Pruefung"
+                    }
+                  },
+                  "Property": "Schein"
+                }
+              },
+              "queryRef": "Pruefung.Schein",
+              "nativeQueryRef": "Schein"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Einzelne Fälle'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

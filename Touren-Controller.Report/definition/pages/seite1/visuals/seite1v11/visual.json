@@ -1,0 +1,134 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "seite1v11",
+  "position": {
+    "x": 780,
+    "y": 470,
+    "z": 0,
+    "height": 230,
+    "width": 476,
+    "tabOrder": 11
+  },
+  "visual": {
+    "visualType": "columnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Standorte"
+                    }
+                  },
+                  "Property": "Standort"
+                }
+              },
+              "queryRef": "Standorte.Standort",
+              "nativeQueryRef": "Standort"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Kennzahlen"
+                    }
+                  },
+                  "Property": "Personal"
+                }
+              },
+              "queryRef": "Kennzahlen.Personal",
+              "nativeQueryRef": "Personal"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Kennzahlen"
+                    }
+                  },
+                  "Property": "Entsorgung"
+                }
+              },
+              "queryRef": "Kennzahlen.Entsorgung",
+              "nativeQueryRef": "Entsorgung"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Kennzahlen"
+                    }
+                  },
+                  "Property": "Diesel"
+                }
+              },
+              "queryRef": "Kennzahlen.Diesel",
+              "nativeQueryRef": "Diesel"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "categoryAxis": [
+        {
+          "properties": {
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "valueAxis": [
+        {
+          "properties": {
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Woraus die Kosten bestehen'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

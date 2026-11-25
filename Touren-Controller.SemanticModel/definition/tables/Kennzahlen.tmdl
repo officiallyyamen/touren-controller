@@ -1,0 +1,132 @@
+table Kennzahlen
+	lineageTag: d19fac32-92cc-5bcc-9e65-5b892b00efd1
+
+	/// Anzahl der gemeldeten Abholfahrten
+	measure Fahrten = COUNTROWS ( Fahrten )
+		formatString: #,##0
+		displayFolder: 1 Ergebnis
+		lineageTag: f09749b0-a764-50a7-aac8-72516c88ca6e
+
+	/// Preis pro Abfuhr laut Vertrag, der am Tag der Fahrt gilt
+	measure Erlös = SUM ( Fahrten[Erloes] )
+		formatString: #,##0 €
+		displayFolder: 1 Ergebnis
+		lineageTag: 7e17e77a-dc75-5c9c-8b09-29fe94412fec
+
+	/// Dieselkosten netto
+	measure Diesel = SUM ( Fahrten[Diesel] )
+		formatString: #,##0 €
+		displayFolder: 2 Kosten
+		lineageTag: cbd6cfa4-60b0-5d53-b2b2-d6cf59ddb760
+
+	/// Stunden mal Stundensatz
+	measure Personal = SUM ( Fahrten[Personal] )
+		formatString: #,##0 €
+		displayFolder: 2 Kosten
+		lineageTag: 7a232f84-42fe-5b6d-8d77-d3bf555525e8
+
+	/// Tonnen mal Kosten je Tonne, bei Papier und Glas negativ, weil es dafür Geld gibt
+	measure Entsorgung = SUM ( Fahrten[Entsorgung] )
+		formatString: #,##0 €
+		displayFolder: 2 Kosten
+		lineageTag: ca3c43ec-5527-507b-9a00-bbacb231369b
+
+	/// Diesel, Personal und Entsorgung zusammen
+	measure Kosten = [Diesel] + [Personal] + [Entsorgung]
+		formatString: #,##0 €
+		displayFolder: 2 Kosten
+		lineageTag: 65bf8134-3ecd-52fe-b642-3184113ece40
+
+	/// Erlös minus Kosten, bevor Verwaltung und andere Fixkosten bezahlt sind
+	measure Deckungsbeitrag = [Erlös] - [Kosten]
+		formatString: #,##0 €
+		displayFolder: 1 Ergebnis
+		lineageTag: 1e96f111-23fb-5b2e-80f1-550f00947daf
+
+	/// Wie viel vom Erlös übrig bleibt
+	measure 'DB in %' = DIVIDE ( [Deckungsbeitrag], [Erlös] )
+		formatString: 0.0 %
+		displayFolder: 1 Ergebnis
+		lineageTag: 2f74f093-4389-53f7-b2ce-1748b45857a7
+
+	/// Was eine Fahrt im Schnitt übrig lässt
+	measure 'DB je Fahrt' = DIVIDE ( [Deckungsbeitrag], [Fahrten] )
+		formatString: #,##0 €
+		displayFolder: 1 Ergebnis
+		lineageTag: 34a7d4bb-1376-5d64-bb35-0a0c87c4b050
+
+	/// Gewicht laut Wiegeschein, doppelte Scheine zählen einmal
+	measure Tonnen = SUM ( Fahrten[Tonnen] )
+		formatString: #,##0
+		displayFolder: 3 Leistung
+		lineageTag: b67014e0-6d3b-507a-b67d-24fc72f38a42
+
+	/// Kosten geteilt durch Tonnen
+	measure 'Kosten je Tonne' = DIVIDE ( [Kosten], [Tonnen] )
+		formatString: #,##0 €
+		displayFolder: 3 Leistung
+		lineageTag: 3e57c081-83e2-5a00-9eba-3ec47bf92d4d
+
+	/// Tonnen geteilt durch Ladekapazität, nur Fahrten mit Gewicht
+	measure Auslastung =
+			DIVIDE (
+			    CALCULATE ( [Tonnen], Fahrten[Tonnen] > 0 ),
+			    SUMX ( FILTER ( Fahrten, Fahrten[Tonnen] > 0 ), RELATED ( Touren[Kapazitaet_t] ) )
+			)
+		formatString: 0.0 %
+		displayFolder: 3 Leistung
+		lineageTag: c24bb4ba-68d4-54e9-8e89-d1f8b4c07335
+
+	/// Geplanter Erlös
+	measure 'Plan Erlös' = CALCULATE ( SUM ( Plan[Wert] ), Plan[Kennzahl] = "Erlös" )
+		formatString: #,##0 €
+		displayFolder: 4 Plan
+		lineageTag: e33f742b-064a-5199-b303-64d5e33aad29
+
+	/// Geplante Kosten
+	measure 'Plan Kosten' = CALCULATE ( SUM ( Plan[Wert] ), Plan[Kennzahl] = "Kosten" )
+		formatString: #,##0 €
+		displayFolder: 4 Plan
+		lineageTag: 3a55ba79-c770-57d5-8400-e1e1fbd33489
+
+	/// Geplanter Deckungsbeitrag
+	measure 'Plan DB' = [Plan Erlös] - [Plan Kosten]
+		formatString: #,##0 €
+		displayFolder: 4 Plan
+		lineageTag: 84ab56d1-7a1b-50ba-9d5b-ff4866ef4bcc
+
+	/// Deckungsbeitrag minus Plan, negativ heißt schlechter als geplant
+	measure 'Abweichung DB' = [Deckungsbeitrag] - [Plan DB]
+		formatString: #,##0 €
+		displayFolder: 4 Plan
+		lineageTag: 7331814d-c17b-5411-9ed6-7b146a3af553
+
+	/// Touren mit negativem Deckungsbeitrag
+	measure Verlusttouren = COUNTROWS ( FILTER ( VALUES ( Touren[Tour] ), [Deckungsbeitrag] < 0 ) ) + 0
+		formatString: #,##0
+		displayFolder: 1 Ergebnis
+		lineageTag: bf1ce0b1-9bee-57cf-9d3d-8859946e8af4
+
+	/// Summe der Verluste dieser Touren
+	measure 'Verlust gesamt' = SUMX ( FILTER ( VALUES ( Touren[Tour] ), [Deckungsbeitrag] < 0 ), [Deckungsbeitrag] )
+		formatString: #,##0 €
+		displayFolder: 1 Ergebnis
+		lineageTag: 7fb38ffb-1933-5416-8cb6-d23def4547ce
+
+	/// Auffällige Wiegescheine
+	measure Datenfehler = COUNTROWS ( Pruefung ) + 0
+		formatString: #,##0
+		displayFolder: 5 Datenqualität
+		lineageTag: 8f7c4337-2d13-5cd8-938c-9c84d1f4fb24
+
+	column leer
+		dataType: string
+		isHidden
+		lineageTag: 387822af-3a08-520c-ba54-93bb87f68c81
+		summarizeBy: none
+		sourceColumn: leer
+
+	partition Kennzahlen = m
+		mode: import
+		source = #table(type table [leer = text], {{""}})
+

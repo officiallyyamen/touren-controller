@@ -1,0 +1,94 @@
+table Fahrten
+	lineageTag: 1f8e9346-2723-52f5-b0c6-31b991056f30
+
+	column Datum
+		dataType: dateTime
+		formatString: dd.mm.yyyy
+		lineageTag: b4dcc944-cd25-5157-a23e-2c4ca6a90927
+		summarizeBy: none
+		sourceColumn: Datum
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Tour
+		dataType: string
+		isHidden
+		lineageTag: e173adc2-d51e-5a43-8bf5-9a6afb403c5d
+		summarizeBy: none
+		sourceColumn: Tour
+
+	column Standort
+		dataType: string
+		isHidden
+		lineageTag: 0aa6e1ed-5b31-5c10-9603-4a6de86bb96f
+		summarizeBy: none
+		sourceColumn: Standort
+
+	column Fahrzeug
+		dataType: string
+		lineageTag: 53716540-0e64-57d5-a571-cbea8f764bd7
+		summarizeBy: none
+		sourceColumn: Fahrzeug
+
+	column km
+		dataType: double
+		lineageTag: f6dca0f1-60b8-5926-b456-8a8e32fe9742
+		summarizeBy: sum
+		sourceColumn: km
+
+	column Stunden
+		dataType: double
+		lineageTag: 32c760e0-e523-54a4-b72a-7d533ffbb8dc
+		summarizeBy: sum
+		sourceColumn: Stunden
+
+	column Diesel
+		dataType: double
+		lineageTag: 8e78af1c-15ed-5d8e-baad-d316a65c5f42
+		summarizeBy: sum
+		sourceColumn: Diesel
+
+	column Tonnen
+		dataType: double
+		lineageTag: af1d7db4-2079-5884-a90e-adf66c3534c7
+		summarizeBy: sum
+		sourceColumn: Tonnen
+
+	column Personal
+		dataType: double
+		lineageTag: 9726435d-a24e-5d39-abbe-89d82e426d6f
+		summarizeBy: sum
+		sourceColumn: Personal
+
+	column Entsorgung
+		dataType: double
+		lineageTag: dda2141d-630f-5d89-ba43-e5d0c01e7f1b
+		summarizeBy: sum
+		sourceColumn: Entsorgung
+
+	column Erloes
+		dataType: double
+		lineageTag: 9c85870a-721d-5265-85aa-2bfe501832cc
+		summarizeBy: sum
+		sourceColumn: Erloes
+
+	partition Fahrten = m
+		mode: import
+		source =
+				let
+				    JeStandort = Table.AddColumn(Standortliste, "Daten", each fnStandort([Kuerzel], [Datei], [Kopfzeile], [Diesel_brutto])),
+				    Alle = Table.Combine(JeStandort[Daten]),
+				    MitGewicht = Table.ExpandTableColumn(Table.NestedJoin(Alle, {"Tour", "Datum"}, Waage, {"Tour", "Datum"}, "w", JoinKind.LeftOuter), "w", {"kg"}),
+				    Tonnen = Table.AddColumn(MitGewicht, "Tonnen", each if [kg] = null then 0 else [kg] / 1000, type number),
+				    MitArt = Table.ExpandTableColumn(Table.NestedJoin(Tonnen, {"Tour"}, Touren, {"Tour"}, "t", JoinKind.LeftOuter), "t", {"Abfallart"}),
+				    MitSatz = Table.ExpandTableColumn(Table.NestedJoin(MitArt, {"Abfallart"}, Abfallarten, {"Abfallart"}, "a", JoinKind.LeftOuter), "a", {"Entsorgung_je_t"}),
+				    Personal = Table.AddColumn(MitSatz, "Personal", each [Stunden] * Stundensatz, type number),
+				    Entsorgung = Table.AddColumn(Personal, "Entsorgung", each [Tonnen] * [Entsorgung_je_t], type number),
+				    MitPreisen = Table.NestedJoin(Entsorgung, {"Tour"}, Preise, {"Tour"}, "p", JoinKind.LeftOuter),
+				    Erloes = Table.AddColumn(MitPreisen, "Erloes", (z) => Table.Last(Table.Sort(Table.SelectRows(z[p], each [Gueltig_ab] <= z[Datum]), {"Gueltig_ab", Order.Ascending}))[Preis_Abfuhr], type number),
+				    Auswahl = Table.SelectColumns(Erloes, {"Datum", "Tour", "Standort", "Fahrzeug", "km", "Stunden", "Diesel", "Tonnen", "Personal", "Entsorgung", "Erloes"})
+				in
+				    Auswahl
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,113 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1148.0250567128987,
+            "y": 135.63300596492365
+          },
+          "nodeIndex": "Kennzahlen",
+          "nodeLineageTag": "d19fac32-92cc-5bcc-9e65-5b892b00efd1",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 629.78955710476259,
+            "y": 59.956977049686088
+          },
+          "nodeIndex": "Fahrten",
+          "nodeLineageTag": "1f8e9346-2723-52f5-b0c6-31b991056f30",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 339.86269920885627,
+            "y": -8.049648773249487
+          },
+          "nodeIndex": "Kalender",
+          "nodeLineageTag": "84cee117-3046-5234-a05f-cad409e3fe69",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50.010092336156731,
+            "y": 345.26601192984731
+          },
+          "nodeIndex": "Plan",
+          "nodeLineageTag": "c7757ad4-064c-50fe-81f4-d2e33560fa52",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": -50
+          },
+          "nodeIndex": "Pruefung",
+          "nodeLineageTag": "f635f128-c852-590f-8d76-3d0a0ea0b505",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 339.85783268093417,
+            "y": 245.80517912707654
+          },
+          "nodeIndex": "Standorte",
+          "nodeLineageTag": "9deb9c55-92b1-5a7c-81e1-5fc8d4a66c2e",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 914.02505671289873,
+            "y": 79.335232014178587
+          },
+          "nodeIndex": "Touren",
+          "nodeLineageTag": "634570e7-0b99-5234-a03f-38b7766f1078",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Alle Tabellen",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Alle Tabellen",
+  "defaultDiagram": "Alle Tabellen"
+}

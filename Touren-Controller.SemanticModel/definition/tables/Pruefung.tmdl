@@ -1,0 +1,52 @@
+table Pruefung
+	lineageTag: f635f128-c852-590f-8d76-3d0a0ea0b505
+
+	column Problem
+		dataType: string
+		lineageTag: 626812e2-bd00-5f5f-ac8d-dcf6d18309ac
+		summarizeBy: none
+		sourceColumn: Problem
+
+	column Standort
+		dataType: string
+		isHidden
+		lineageTag: 9204b149-e4da-5988-96c3-412d654bd341
+		summarizeBy: none
+		sourceColumn: Standort
+
+	column Datum
+		dataType: dateTime
+		formatString: dd.mm.yyyy
+		lineageTag: a0c39ef3-df15-5e64-95d0-a04bdc25b465
+		summarizeBy: none
+		sourceColumn: Datum
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Tour
+		dataType: string
+		lineageTag: 1d3b0082-d1bd-52ca-a881-4760529d65f9
+		summarizeBy: none
+		sourceColumn: Tour
+
+	column Schein
+		dataType: string
+		lineageTag: 24dab1b4-9558-5b7e-a799-846c56e344a0
+		summarizeBy: none
+		sourceColumn: Schein
+
+	partition Pruefung = m
+		mode: import
+		source =
+				let
+				    Doppelt = Table.SelectRows(Table.Group(WaageRoh, {"Schein", "Datum", "Tour"}, {{"n", Table.RowCount, Int64.Type}}), each [n] > 1),
+				    A = Table.AddColumn(Table.RemoveColumns(Doppelt, {"n"}), "Problem", each "Wiegeschein doppelt", type text),
+				    Eindeutig = Table.SelectColumns(Table.Distinct(WaageRoh, {"Schein"}), {"Schein", "Datum", "Tour", "Netto_kg"}),
+				    B = Table.AddColumn(Table.RemoveColumns(Table.SelectRows(Eindeutig, each [Netto_kg] = null), {"Netto_kg"}), "Problem", each "Gewicht fehlt", type text),
+				    OhneFahrt = Table.NestedJoin(Eindeutig, {"Tour", "Datum"}, Fahrten, {"Tour", "Datum"}, "f", JoinKind.LeftAnti),
+				    C = Table.AddColumn(Table.SelectColumns(OhneFahrt, {"Schein", "Datum", "Tour"}), "Problem", each "Fahrt nicht gemeldet", type text),
+				    Alle = Table.Combine({A, B, C}),
+				    Ort = Table.AddColumn(Alle, "Standort", each Text.Start([Tour], 3), type text)
+				in
+				    Ort
+

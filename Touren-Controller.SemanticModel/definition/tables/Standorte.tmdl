@@ -1,0 +1,23 @@
+table Standorte
+	lineageTag: 9deb9c55-92b1-5a7c-81e1-5fc8d4a66c2e
+
+	column Kuerzel
+		dataType: string
+		isHidden
+		isKey
+		lineageTag: 959caaee-7ebb-51c2-8b7c-a82d462a0992
+		summarizeBy: none
+		sourceColumn: Kuerzel
+
+	column Standort
+		dataType: string
+		lineageTag: fac1ec7d-131e-52a5-80e1-fef2fb8849df
+		summarizeBy: none
+		sourceColumn: Standort
+
+	partition Standorte = m
+		mode: import
+		source = Table.SelectColumns(Standortliste, {"Kuerzel", "Standort"})
+
+	annotation PBI_ResultType = Table
+

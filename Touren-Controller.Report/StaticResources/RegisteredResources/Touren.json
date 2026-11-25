@@ -1,0 +1,81 @@
+{
+  "name": "Touren",
+  "dataColors": [
+    "#1F6F54",
+    "#B9C4BF",
+    "#C9463D",
+    "#E0A63B",
+    "#3F7CAC",
+    "#7A8C84"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#1B2420",
+  "tableAccent": "#1F6F54",
+  "good": "#1F6F54",
+  "bad": "#C9463D",
+  "neutral": "#E0A63B",
+  "textClasses": {
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 12,
+      "color": "#1B2420"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 10,
+      "color": "#4B5852"
+    },
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 24,
+      "color": "#1B2420"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#E1E6E3"
+              }
+            },
+            "radius": 8
+          }
+        ],
+        "visualHeader": [
+          {
+            "show": false
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F4F6F5"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    }
+  }
+}

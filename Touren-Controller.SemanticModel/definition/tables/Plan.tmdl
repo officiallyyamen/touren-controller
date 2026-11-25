@@ -1,0 +1,45 @@
+table Plan
+	lineageTag: c7757ad4-064c-50fe-81f4-d2e33560fa52
+
+	column Standort
+		dataType: string
+		isHidden
+		lineageTag: e923a185-7ebb-5aab-a91e-61d6dd7d8e5f
+		summarizeBy: none
+		sourceColumn: Standort
+
+	column Kennzahl
+		dataType: string
+		lineageTag: 223c737f-232d-5027-b06a-b8e0799ae43b
+		summarizeBy: none
+		sourceColumn: Kennzahl
+
+	column Monatsbeginn
+		dataType: dateTime
+		formatString: dd.mm.yyyy
+		lineageTag: 7f2d221e-8fab-5038-86f4-0924b8189022
+		summarizeBy: none
+		sourceColumn: Monatsbeginn
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Wert
+		dataType: double
+		lineageTag: b633f204-8326-5d2a-8a77-99186f7dfdbe
+		summarizeBy: sum
+		sourceColumn: Wert
+
+	partition Plan = m
+		mode: import
+		source =
+				let
+				    Mappe = Excel.Workbook(File.Contents(Ordner & "\plan_2026.xlsx"), true, true),
+				    Blatt = Mappe{[Item = "Plan 2026", Kind = "Sheet"]}[Data],
+				    Lang = Table.UnpivotOtherColumns(Blatt, {"Standort", "Kennzahl"}, "Monat", "Wert"),
+				    Beginn = Table.AddColumn(Lang, "Monatsbeginn", each #date(2026, List.PositionOf({"Jän", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt"}, [Monat]) + 1, 1), type date),
+				    Kurz = Table.ExpandTableColumn(Table.NestedJoin(Beginn, {"Standort"}, Standorte, {"Standort"}, "s", JoinKind.LeftOuter), "s", {"Kuerzel"}),
+				    Auswahl = Table.RenameColumns(Table.SelectColumns(Kurz, {"Kuerzel", "Kennzahl", "Monatsbeginn", "Wert"}), {{"Kuerzel", "Standort"}}),
+				    Typen = Table.TransformColumnTypes(Auswahl, {{"Standort", type text}, {"Kennzahl", type text}, {"Wert", type number}})
+				in
+				    Typen
+

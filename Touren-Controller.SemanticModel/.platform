@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Touren-Controller"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "38a78f3a-7dfc-5716-84d0-e3b1b9ffb8fd"
+  }
+}

@@ -1,0 +1,37 @@
+﻿Kuerzel;Alt;Neu
+WIE;Datum;Datum
+WIE;Tour;Tour
+WIE;LKW;Fahrzeug
+WIE;km;km
+WIE;Stunden;Stunden
+WIE;Diesel €;Diesel
+GRZ;Tag;Datum
+GRZ;Tourennr.;Tour
+GRZ;Fahrzeug;Fahrzeug
+GRZ;Kilometer;km
+GRZ;Arbeitszeit;Stunden
+GRZ;Dieselkosten;Diesel
+LIN;Einsatzdatum;Datum
+LIN;Tour-ID;Tour
+LIN;Kennzeichen;Fahrzeug
+LIN;gefahrene km;km
+LIN;Std.;Stunden
+LIN;Treibstoff EUR;Diesel
+SBG;Tour;Tour
+SBG;Datum;Datum
+SBG;Wagen;Fahrzeug
+SBG;Strecke;km
+SBG;Dauer;Stunden
+SBG;Diesel;Diesel
+VIL;DATUM;Datum
+VIL;TOUR;Tour
+VIL;LKW-NR;Fahrzeug
+VIL;KM;km
+VIL;STUNDEN;Stunden
+VIL;TANKKOSTEN;Diesel
+STP;Datum;Datum
+STP;Tour Nr;Tour
+STP;Auto;Fahrzeug
+STP;Km-Stand Differenz;km
+STP;Arbeitsstunden;Stunden
+STP;Diesel brutto;Diesel

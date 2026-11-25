@@ -1,0 +1,52 @@
+table Kalender
+	lineageTag: 84cee117-3046-5234-a05f-cad409e3fe69
+
+	column Datum
+		dataType: dateTime
+		isKey
+		formatString: dd.mm.yyyy
+		lineageTag: 6447f537-2c3a-5acd-82f7-7871d637eaee
+		summarizeBy: none
+		sourceColumn: Datum
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Jahr
+		dataType: int64
+		lineageTag: b90300af-f3d2-5b0a-b1a6-69f38f052fd2
+		summarizeBy: none
+		sourceColumn: Jahr
+
+	column MonatNr
+		dataType: int64
+		isHidden
+		lineageTag: dc6ebcc7-ac2e-510c-8166-603b38cd574e
+		summarizeBy: none
+		sourceColumn: MonatNr
+
+	column Monat
+		dataType: string
+		lineageTag: 4f231140-8d37-5249-a26a-4db892822db2
+		summarizeBy: none
+		sourceColumn: Monat
+		sortByColumn: MonatNr
+
+	column KW
+		dataType: int64
+		lineageTag: a913f5e9-8be2-5dbd-a4a6-d863328b3ca1
+		summarizeBy: none
+		sourceColumn: KW
+
+	partition Kalender = m
+		mode: import
+		source =
+				let
+				    Tage = List.Dates(#date(2026, 1, 1), 304, #duration(1, 0, 0, 0)),
+				    Tabelle = Table.FromList(Tage, Splitter.SplitByNothing(), type table [Datum = date]),
+				    Jahr = Table.AddColumn(Tabelle, "Jahr", each Date.Year([Datum]), Int64.Type),
+				    Nr = Table.AddColumn(Jahr, "MonatNr", each Date.Month([Datum]), Int64.Type),
+				    Monat = Table.AddColumn(Nr, "Monat", each {"Jän", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"}{[MonatNr] - 1}, type text),
+				    KW = Table.AddColumn(Monat, "KW", each Date.WeekOfYear([Datum], Day.Monday), Int64.Type)
+				in
+				    KW
+

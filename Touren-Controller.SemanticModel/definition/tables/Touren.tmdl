@@ -1,0 +1,34 @@
+table Touren
+	lineageTag: 634570e7-0b99-5234-a03f-38b7766f1078
+
+	column Tour
+		dataType: string
+		isKey
+		lineageTag: c427db3c-a5e9-5a2b-ad98-686fd0da7060
+		summarizeBy: none
+		sourceColumn: Tour
+
+	column Kunde
+		dataType: string
+		lineageTag: 0eb99db3-7b25-515a-8cab-777987a0d9dc
+		summarizeBy: none
+		sourceColumn: Kunde
+
+	column Abfallart
+		dataType: string
+		lineageTag: aefbf4b7-6c68-539c-8660-3e9b149eee4e
+		summarizeBy: none
+		sourceColumn: Abfallart
+
+	column Kapazitaet_t
+		dataType: double
+		lineageTag: f31d5055-ceea-58a3-a7e4-d8dcb3adc9c9
+		summarizeBy: none
+		sourceColumn: Kapazitaet_t
+
+	partition Touren = m
+		mode: import
+		source = Table.Distinct(Table.SelectColumns(Preise, {"Tour", "Kunde", "Abfallart", "Kapazitaet_t"}), {"Tour"})
+
+	annotation PBI_ResultType = Table
+

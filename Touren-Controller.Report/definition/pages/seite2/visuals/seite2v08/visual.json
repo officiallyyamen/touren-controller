@@ -1,0 +1,219 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "seite2v08",
+  "position": {
+    "x": 24,
+    "y": 204,
+    "z": 0,
+    "height": 496,
+    "width": 800,
+    "tabOrder": 8
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Touren"
+                    }
+                  },
+                  "Property": "Tour"
+                }
+              },
+              "queryRef": "Touren.Tour",
+              "nativeQueryRef": "Tour"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Touren"
+                    }
+                  },
+                  "Property": "Kunde"
+                }
+              },
+              "queryRef": "Touren.Kunde",
+              "nativeQueryRef": "Kunde"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Touren"
+                    }
+                  },
+                  "Property": "Abfallart"
+                }
+              },
+              "queryRef": "Touren.Abfallart",
+              "nativeQueryRef": "Abfallart"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Kennzahlen"
+                    }
+                  },
+                  "Property": "Auslastung"
+                }
+              },
+              "queryRef": "Kennzahlen.Auslastung",
+              "nativeQueryRef": "Auslastung"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Kennzahlen"
+                    }
+                  },
+                  "Property": "Erlös"
+                }
+              },
+              "queryRef": "Kennzahlen.Erlös",
+              "nativeQueryRef": "Erlös"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Kennzahlen"
+                    }
+                  },
+                  "Property": "Kosten"
+                }
+              },
+              "queryRef": "Kennzahlen.Kosten",
+              "nativeQueryRef": "Kosten"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Kennzahlen"
+                    }
+                  },
+                  "Property": "Deckungsbeitrag"
+                }
+              },
+              "queryRef": "Kennzahlen.Deckungsbeitrag",
+              "nativeQueryRef": "Deckungsbeitrag"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Kennzahlen"
+                  }
+                },
+                "Property": "Deckungsbeitrag"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": false
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Conditional": {
+                      "Cases": [
+                        {
+                          "Condition": {
+                            "Comparison": {
+                              "ComparisonKind": 3,
+                              "Left": {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "Kennzahlen"
+                                    }
+                                  },
+                                  "Property": "Deckungsbeitrag"
+                                }
+                              },
+                              "Right": {
+                                "Literal": {
+                                  "Value": "0D"
+                                }
+                              }
+                            }
+                          },
+                          "Value": {
+                            "Literal": {
+                              "Value": "'#C9463D'"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "Kennzahlen.Deckungsbeitrag"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Alle Touren, schlechteste zuerst'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

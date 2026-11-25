@@ -1,0 +1,152 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "seite2v09",
+  "position": {
+    "x": 840,
+    "y": 204,
+    "z": 0,
+    "height": 496,
+    "width": 416,
+    "tabOrder": 9
+  },
+  "visual": {
+    "visualType": "scatterChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Touren"
+                    }
+                  },
+                  "Property": "Tour"
+                }
+              },
+              "queryRef": "Touren.Tour",
+              "nativeQueryRef": "Tour"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Kennzahlen"
+                    }
+                  },
+                  "Property": "Auslastung"
+                }
+              },
+              "queryRef": "Kennzahlen.Auslastung",
+              "nativeQueryRef": "Auslastung"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Kennzahlen"
+                    }
+                  },
+                  "Property": "DB je Fahrt"
+                }
+              },
+              "queryRef": "Kennzahlen.DB je Fahrt",
+              "nativeQueryRef": "DB je Fahrt"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Conditional": {
+                      "Cases": [
+                        {
+                          "Condition": {
+                            "Comparison": {
+                              "ComparisonKind": 3,
+                              "Left": {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "Kennzahlen"
+                                    }
+                                  },
+                                  "Property": "Deckungsbeitrag"
+                                }
+                              },
+                              "Right": {
+                                "Literal": {
+                                  "Value": "0D"
+                                }
+                              }
+                            }
+                          },
+                          "Value": {
+                            "Literal": {
+                              "Value": "'#C9463D'"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Auslastung und Ergebnis je Fahrt'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

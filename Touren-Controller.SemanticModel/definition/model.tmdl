@@ -1,0 +1,22 @@
+model Model
+	culture: de-AT
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: de-AT
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["Kalender","Standorte","Touren","Fahrten","Plan","Pruefung","Kennzahlen","Ordner","Standortliste","Spaltenliste","fnDatum","fnZahl","fnTour","fnStandort","WaageRoh","Waage","Preise","Abfallarten","Stundensatz"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Kalender
+ref table Standorte
+ref table Touren
+ref table Fahrten
+ref table Plan
+ref table Pruefung
+ref table Kennzahlen
+

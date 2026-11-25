@@ -1,0 +1,28 @@
+relationship 82498a0d-ccc9-591d-99c6-a442cea436df
+	fromColumn: Fahrten.Datum
+	toColumn: Kalender.Datum
+
+relationship ee598a95-5a72-55c8-8d74-2ad4069df016
+	fromColumn: Fahrten.Standort
+	toColumn: Standorte.Kuerzel
+
+relationship f815a088-79ce-55b0-9d1e-23fb70137be4
+	fromColumn: Fahrten.Tour
+	toColumn: Touren.Tour
+
+relationship 5e9b7faf-86d5-5222-b964-56b80d55f402
+	fromColumn: Plan.Monatsbeginn
+	toColumn: Kalender.Datum
+
+relationship 7295720e-2e5a-5598-995e-61f2f76f0af3
+	fromColumn: Plan.Standort
+	toColumn: Standorte.Kuerzel
+
+relationship 9918713d-b68f-5846-b0ef-381df234100e
+	fromColumn: Pruefung.Datum
+	toColumn: Kalender.Datum
+
+relationship b28476f0-edb6-54c0-9b16-f18f44914589
+	fromColumn: Pruefung.Standort
+	toColumn: Standorte.Kuerzel
+
